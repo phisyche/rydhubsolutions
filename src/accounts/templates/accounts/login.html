@@ -1,0 +1,80 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+{% if request.user.is_authenticated %}
+<div class="form-group pt-5">
+    <div class="row justify-content-left ml-5">
+        <div class="alert alert-success" role="alert">
+            <p> Looks like you're already logged in as {{ request.user.username }}</p>
+            <p> click <a href="{% url 'accounts:home' %}">here</a> to go back home</p>
+        </div>
+        <br>
+        <div class="container">
+            <p> if you would like to log in to a different account you must logout of this one first </p>
+            <form onsubmit="" action="{% url 'accounts:logout' %}" method="get">
+            {% csrf_token %}
+                    <button type="submit" class="btn btn-info">
+                        Logout
+                    </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="form-group pt-5">
+    <div class="row justify-content-left">
+        <div class="col-md-8">
+            <form onsubmit="" action="{% url 'accounts:login' %}" method="post">
+                {% csrf_token %}
+                <div class="card">
+                <div class="card-header">
+                    <h2> User Login </h2>
+                </div>
+                <div class="card-body">
+                    <br>
+                    {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+
+                    <div class="form-group row">
+                        <label for="username" class="col-md-4 col-form-label text-md-right">email or username</label>
+                        <div class="col-md-6">
+                            <input name='username' type="text" class="form-control" placeholder="username or email" required="" value="{%if form_username %}{{form_username}}{% endif %}"/>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                        <div class="col-md-6">
+                            <input name='password' type="password" class="form-control " placeholder="password" required="" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 offset-md-4">
+                        <button type="login" class="btn btn-primary">
+                            Sing In
+                        </button>
+                    </div>
+                </div>
+                </div>
+            </form>
+                {% comment %} redirect user to registeration page {% endcomment %}
+                <div class="offset-md-7">
+                    <p> Dont have an account yet? <a href="{% url 'accounts:register' %}"> Register </a>
+                    <br>
+                </div>
+                <div class="offset-md-8">
+                    {% comment %} redirect user to home page {% endcomment %}
+                    <p> Take me back <a href="{% url 'products:home' %}"> Home </a> instead </p>
+                </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+{% endblock %}

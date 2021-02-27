@@ -1,0 +1,152 @@
+{% extends "base/base.html" %}
+
+{% block before_container %}
+<div class="row">
+<div class="col">
+</div>
+<div class="col-9">
+
+</div>
+<div class="col">
+</div>
+{% endblock before_container %}
+
+
+
+{% block content %}
+
+{% comment %} here we load the categories {% endcomment %}
+<div class="row">
+
+  <div class="col-sm-2">
+  <br>
+        <div class="card">
+            <div class="card-header">
+            Cars in Stock
+            </div>
+            <ul class="list-group list-group-flush">
+                {%include "products/components/categories.html" %}
+            </ul>
+        </div>
+    </div>
+
+
+  <div class="col-sm-10">
+{% comment %} here we have a slideshow of featured products {% endcomment %}
+<br><br><br>
+{% if featured_products %}    
+    <carousel :navigation-enabled="false" :loop="true" :autoplay="true" :per-page="1" :center-mode="true" :adjustable-height="false" :mouse-drag="false" centerMode="true">
+        <slide v-for="slide in slides" :key="slide.id">
+            <a :href="slide.link">
+                <div class="container">
+                        <img :src="slide.image" class="img-fluid">
+                </div>
+            </a>
+        </slide>
+    </carousel>
+{% endif %}
+
+
+
+
+{% comment %} here we load products in card decks {% endcomment %}
+<br>
+    {% if products_and_carddeck_checker != empty_list %}
+        {% for product, carddeck in products_and_carddeck_checker%}
+            {% if carddeck == 'first' %}
+                <div class="card-columns">
+                    <div class="card" style="height: 29rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{% url 'products:product_page' product.id %}" >
+                                {{product}}
+                                </a>
+                            </h5>
+                    {% for product_image in product_images %}
+                        {% if product_image.product == product and product_image.main_picture == True%}
+                            <a href="{% url 'products:product_page' product.id %}">
+                                <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200'>
+                            </a>
+                            <br>
+                            <strong><p class="card-text"> KES {{product.current_price}}</p></strong>
+                        {% endif %}
+                    {% endfor %}
+                            <p class="card-text">{{product.description}}</p>
+                        </div>
+                    </div>
+            {% endif %}
+            {% if carddeck == True %}
+                <br>
+                </div>
+                <div class="card-columns">
+                    <div class="card" style="height: 29rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{% url 'products:product_page' product.id %}" >
+                                {{product}}
+                                </a>
+                            </h5>
+                    {% for product_image in product_images %}
+                        {% if product_image.product == product and product_image.main_picture == True%}
+                            <a href="{% url 'products:product_page' product.id %}">
+                                <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200'>
+                            </a>
+                            <br>
+                            <strong><p class="card-text"> KES {{product.current_price}}</p></strong>
+                        {% endif %}
+                    {% endfor %}
+                            <p class="card-text">{{product.description}}</p>
+                        </div>
+                    </div>
+            {% endif %}
+            {% if carddeck == False %}
+                    <div class="card" style="height: 29rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{% url 'products:product_page' product.id %}" >
+                                {{product}}
+                                </a>
+                            </h5>
+                    {% for product_image in product_images %}
+                        {% if product_image.product == product and product_image.main_picture == True%}
+                            <a href="{% url 'products:product_page' product.id %}">
+                                <img class="card-img-top" src="/media/{{product_image.image_url}}" width='200'>
+                            </a>
+                            <br>
+                            <strong><p class="card-text"> KES {{product.current_price}}</p></strong>
+                        {% endif %}
+                    {% endfor %}
+                            <p class="card-text">{{product.description}}</p>
+                        </div>
+                    </div>
+            {% endif %}
+        {% endfor %}
+            </div>
+    {% else %}
+        could not find any items for the following specificed search keywords: <b>{{ search_string }}</b>
+    {% endif %}
+    </div>
+</div>
+</div>
+
+
+
+{% endblock content %}
+
+
+
+{% comment %} this isnt working i think its because i forced it by making seperate card classes {% endcomment %}
+<style>
+
+
+.card-columns {
+  @include media-breakpoint-only(md) {
+    column-count: 2;
+  }
+  @include media-breakpoint-only(sm) {
+    column-count: 1;
+  }
+}
+</style>
+
+

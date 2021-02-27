@@ -1,0 +1,16 @@
+<li class="list-group-item">
+{% if category.sub_categories_list != empty_list %}
+    <dropdown :trigger="'hover'" :role="'sublist'" :align="'right'">
+    <template slot="btn">
+        <a href="{% url 'products:filter' category %}"> {{category}} </a>
+    </template>
+    <template slot="body">
+        {% for category in category.sub_categories_list%}
+            {% include "products/components/category_recursion.html" %}
+        {% endfor !%}
+    </template>
+    </dropdown>
+{% else %}
+    <a href="{% url 'products:filter' category %}" >{{category}}</a>
+{% endif %}
+</li>

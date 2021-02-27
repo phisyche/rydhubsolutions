@@ -1,0 +1,22 @@
+refactor the repetetive and bad code                                                                            -i did a lot of this, still got more to go tho
+
+add back button when on product page
+
+-rename products app to catalog
+
+when i drag the vuper slides to move them it still registers as a click and opens the page,             -temporarily fixed by disabling the drag feature.... xd
+
+
+
+
+
+
+the standard data format between frontend and backend should be json
+
+security, validating and sanitize user inputs!!! should try to do a fuzz test afterwards
+
+xss, cross site scripting?
+
+look up and learn about "django template json"
+
+urlib.parse.quote

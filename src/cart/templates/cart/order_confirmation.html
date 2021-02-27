@@ -1,0 +1,34 @@
+{% extends "base/base.html" %}
+{% block content %}
+<br>
+{% comment %} this is a simple check, its not important if it fails, its just a check to see what part of the html should be loaded {% endcomment %}
+{% if payment_confirmation == total_cost_with_tax %}
+    <ul class="list-group">
+    <h4 ><div class="alert alert-success" role="alert"> Your order has been successfully processed</div> the total cost was KES {{ total_cost_with_tax}} for the following products:</h4>
+        {% for cart_item in cart_items %}
+            <li class="list-group-item">
+                <strong>
+                    {{cart_item.product.title}}
+                </strong>
+            </li>
+        {% empty %}
+        wait hold on, you didnt even buy anything! how did you reach this page!!! >:( im reporting you to the internet police!!
+
+        {% endfor %}
+    </ul>
+
+    <br><br><br>
+    <div class="float">
+        <h4> Thank You!</h4>
+        {% comment %} redirect user to home page {% endcomment %}
+        <p> Take me back <a href="{% url 'products:home' %}"> Home </a> </p>
+    </div>
+{% else %}
+<div class="float">
+    <p></p>
+    <h4> Error, your order confirmation failed. did you pay?</h4>
+    {% comment %} redirect user to home page {% endcomment %}
+    <p> Take me back <a href="{% url 'products:home' %}"> Home </a> </p>
+</div>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,62 @@
+{% extends "base/base.html" %}
+
+{% block base_head %}
+<style>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+</style>
+{% endblock %}
+
+
+
+
+{% block content %}
+
+<h1>{{product}}</h1>
+<img src="/media/{{main_image.image_url}}" width='600'>
+<br>
+
+{% comment %} put details here, desciprion, cost etc {% endcomment %}
+<p>{{product.description}}</p>
+<strong>KES{{product.current_price}}</strong>
+
+<template>
+<form id="cart_products_update_form" v-on:submit.prevent="add_product_to_cart()" method="post">
+    <input type="hidden" name="cart" value="{{urls_cart}}">
+    <input type="hidden" name="product" value="{{urls_product}}">
+    <input type="hidden" name="quantity" value="1">
+    <input type="hidden" name="updated_by" value="{{username}}">
+    <input type="hidden" name="created_by" value="{{username}}">        
+    <button type="submit" class="btn-info">Order Vehicle</button>
+</form>
+</template>
+<br>
+<transition name="fade">
+  <div class="alert alert-success" role="alert" v-if="added_to_cart_successfully">
+    The product has been successfully added to the cart
+  </div>
+</transition>
+<transition name="fade">
+  <div class="alert alert-danger" role="alert" v-if="failed_adding_to_cart">
+    there was an error with adding this product to your cart
+  </div>
+</transition>
+
+
+{% comment %} rest of the photos {% endcomment %}
+{% if other_images %}
+<p>more images</p>
+{% for image in other_images %}
+    <img src="/media/{{image.image_url}}" width='600'>
+    <br><br>
+{%endfor%}
+{% endif %}
+
+{% endblock content %}
+
+
+
