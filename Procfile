@@ -1,2 +1,2 @@
 
-web: gunicorn ecommercedjvu.wsgi --log-file -
+web: gunicorn djangobase.wsgi --log-file -
