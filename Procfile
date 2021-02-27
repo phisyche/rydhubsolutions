@@ -1,2 +1,2 @@
 
-web: python src/manage.py runserver $PORT
+web:python src/manage.py runserver $PORT
