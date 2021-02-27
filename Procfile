@@ -1,2 +1,2 @@
 
-web: gunicorn djangobase.wsgi.application --log-file -
+web: python src/manage.py runserver
