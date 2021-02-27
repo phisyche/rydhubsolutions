@@ -1,1 +1,2 @@
-web: python src/manage.py runserver
+
+web: gunicorn rydhubsol.wsgi --log-file -
