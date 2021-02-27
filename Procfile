@@ -1,2 +1,2 @@
 
-web: gunicorn rydhubsol.wsgi --log-file -
+web: gunicorn ecommercedjvu.wsgi --log-file -
